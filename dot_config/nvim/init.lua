@@ -1,8 +1,8 @@
 -- Neovim — starter config on top of the defaults.
 -- Reference: https://neovim.io/doc/user/options.html
 --
--- Options only: no plugins, no plugin manager, and no key mappings. Every key
--- is stock Neovim, so the built-in :help and any tutorial applies as written.
+-- Options plus one plugin (the gruvbox colorscheme, via the built-in vim.pack),
+-- no key mappings. Every key is stock Neovim, so :help and any tutorial apply.
 
 local opt = vim.opt
 
@@ -33,6 +33,12 @@ opt.splitright = true
 opt.splitbelow = true
 opt.mouse = "a"
 opt.updatetime = 250
+
+-- Gruvbox dark hard, matching Ghostty and tmux (installed via vim.pack on first start)
+vim.pack.add({ "https://github.com/ellisonleao/gruvbox.nvim" })
+require("gruvbox").setup({ contrast = "hard", transparent_mode = true })
+opt.background = "dark"
+vim.cmd.colorscheme("gruvbox")
 
 -- Briefly highlight yanked text, so it's obvious what was copied
 vim.api.nvim_create_autocmd("TextYankPost", {
