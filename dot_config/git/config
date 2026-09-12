@@ -1,13 +1,17 @@
 # Per-account identity lives in the included files, never here.
 #
 # useConfigOnly stops git guessing an identity from the hostname when no includeIf
-# below matches: a repo outside these two trees fails to commit instead of quietly
+# below matches: a repo outside these trees fails to commit instead of quietly
 # authoring as pbeamirl@<host>. ~/.ssh/config already routes bitbucket-7peaks,
 # bitbucket-appconduct and gitlab-appconduct, none of which have a rule here yet.
 [user]
     useConfigOnly = true
 
 [includeIf "gitdir:~/Repositories/github.com/pbeamirl/"]
+    path = ~/.config/git/pbeamirl
+# jps-laundry is a GitHub org owned by the personal account, so it shares the
+# pbeamirl identity and the default github.com SSH key (no URL rewrite needed).
+[includeIf "gitdir:~/Repositories/github.com/jps-laundry/"]
     path = ~/.config/git/pbeamirl
 [includeIf "gitdir:~/Repositories/github.com/7-peaks-software/"]
     path = ~/.config/git/7peaks
