@@ -43,6 +43,13 @@
     conflictstyle = zdiff3  # show the common ancestor in conflict hunks
 [commit]
     verbose = true          # diff in the commit message editor
+    gpgsign = true
+# Commits are signed with the per-identity SSH key through 1Password's signer.
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+    allowedSignersFile = ~/.ssh/allowed_signers
 [branch]
     sort = -committerdate   # most recently touched branches first
 [column]

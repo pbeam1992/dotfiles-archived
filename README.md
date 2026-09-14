@@ -1,6 +1,6 @@
 # dotfiles
 
-Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Macs (personal and 7peaks work laptop). Packages come from the `Brewfile`. `~/.ssh/config` is age-encrypted in the repo; the identity lives in `key.txt.age`, protected by a passphrase (backed up in 1Password).
+Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Macs (personal and 7peaks work laptop). Packages come from the `Brewfile`. There are no secrets in the repo: SSH private keys stay in 1Password and are served by its SSH agent, and `~/.ssh/config` pins each host to a key by its public `.pub` file.
 
 ## Bootstrap (fresh Mac)
 
@@ -13,13 +13,16 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    eval "$(/opt/homebrew/bin/brew shellenv)"   # for this first session only
    ```
 
-2. Install chezmoi and clone this repo (HTTPS — no SSH keys exist yet):
+2. Install chezmoi and `gh`, log into the personal GitHub account, and clone this repo. The repo is private and no SSH keys exist yet, so the clone goes over HTTPS through the git credential helper that `gh auth login` sets up (answer yes when it offers to authenticate git):
 
    ```sh
-   brew install chezmoi
+   brew install chezmoi gh
+   gh auth login
    mkdir -p ~/Repositories/github.com/pbeamirl
    git clone https://github.com/pbeamirl/dotfiles.git ~/Repositories/github.com/pbeamirl/dotfiles
    ```
+
+   On the work laptop, add the 7peaks GitHub account afterwards with a second `gh auth login`; `gh auth switch` toggles between the two.
 
 3. Run everything:
 
@@ -27,7 +30,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    chezmoi init --source ~/Repositories/github.com/pbeamirl/dotfiles --apply
    ```
 
-   You'll be prompted for the **age passphrase** (restores the encryption key, then decrypts `.ssh/config`) and your **login password** (`chsh` to zsh). `brew bundle` installs all formulae, casks, and App Store apps; trackpad/keyboard/Dock defaults are applied.
+   You'll be prompted for your **login password** (`chsh` to zsh). `brew bundle` installs all formulae, casks, and App Store apps; trackpad/keyboard/Dock defaults are applied.
 
    `~/.config/karabiner` is a symlink into the repo. If Karabiner-Elements was already running before this apply, restart its user server once so it watches the new location (per the [Karabiner docs](https://karabiner-elements.pqrs.org/docs/manual/misc/configuration-file-path/)):
 
@@ -35,7 +38,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    launchctl kickstart -k gui/$(id -u)/org.pqrs.service.agent.Karabiner-Console-User-Server
    ```
 
-4. Sign into 1Password → its SSH agent restores the work keys. Copy your personal GitHub key from 1Password into `~/.ssh/` (filename matching the `IdentityFile` in your ssh config) and `chmod 600` it.
+4. Sign into both 1Password accounts (personal and 7peaks) in the app and turn on the SSH agent under Settings → Developer. `~/.config/1Password/ssh/agent.toml` is already applied and names the four keys the agent serves, so `ssh` and `git` work from here on; no key ever needs copying to disk. Commits are signed with the same keys through 1Password (`op-ssh-sign`), so on a new GitHub account add the public key once more as a **Signing Key** (GitHub tracks those separately from authentication keys).
 
 5. Switch this repo's remote to SSH:
 
@@ -59,7 +62,7 @@ chezmoi diff    # what would change
 chezmoi apply   # apply configs + run pending install scripts
 ```
 
-Editing `~/.ssh/config`: edit the live file, then `chezmoi re-add ~/.ssh/config` (re-encrypts; no passphrase needed).
+Adding an SSH key: create it as an SSH Key item in 1Password, list its title in `dot_config/private_1Password/private_ssh/agent.toml`, drop its public key in `private_dot_ssh/<title>.pub`, and pin it in `private_dot_ssh/private_config`. Then `chezmoi apply`; the agent picks up `agent.toml` changes without a restart.
 
 Claude Code's `settings.json` (both profiles) and the Karabiner config dir are symlinks into `linked/` in the repo, so app-made edits show up in `git status` rather than `chezmoi diff`, and a `git pull` takes effect without `chezmoi apply`. Zed's `settings.json` is a plain copy (Zed's save would replace a symlink): after changing Zed settings in the UI, `chezmoi re-add ~/.config/zed/settings.json`.
 

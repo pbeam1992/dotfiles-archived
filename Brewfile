@@ -2,7 +2,6 @@ cask_args adopt: true
 
 tap "hamed-elfayome/claude-usage"
 
-brew "age"
 brew "bat"
 brew "chezmoi"
 brew "colima"

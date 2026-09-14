@@ -1,0 +1,13 @@
+# Keys the 1Password SSH agent offers. This file's existence replaces the default
+# vault set, so every key ~/.ssh/config pins must be listed here.
+[[ssh-keys]]
+item = "github-pbeamirl"
+
+[[ssh-keys]]
+item = "git-7peaks"
+
+[[ssh-keys]]
+item = "bitbucket-appconduct"
+
+[[ssh-keys]]
+item = "gitlab-appconduct"

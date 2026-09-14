@@ -1,0 +1,35 @@
+Include ~/.colima/ssh_config
+
+# Private keys live in the 1Password SSH agent; each host pins its key by .pub file.
+Host *
+  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+Host bitbucket-7peaks
+  HostName bitbucket.org
+  User git
+  IdentityFile ~/.ssh/git-7peaks.pub
+  IdentitiesOnly yes
+
+Host github-7peaks
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/git-7peaks.pub
+  IdentitiesOnly yes
+
+Host bitbucket-appconduct
+  HostName bitbucket.org
+  User git
+  IdentityFile ~/.ssh/bitbucket-appconduct.pub
+  IdentitiesOnly yes
+
+Host gitlab-appconduct
+  HostName gitlab.com
+  User git
+  IdentityFile ~/.ssh/gitlab-appconduct.pub
+  IdentitiesOnly yes
+
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/github-pbeamirl.pub
+  IdentitiesOnly yes
