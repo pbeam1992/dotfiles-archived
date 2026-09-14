@@ -63,4 +63,6 @@ Editing `~/.ssh/config`: edit the live file, then `chezmoi re-add ~/.ssh/config`
 
 Claude Code's `settings.json` (both profiles) and the Karabiner config dir are symlinks into `linked/` in the repo, so app-made edits show up in `git status` rather than `chezmoi diff`, and a `git pull` takes effect without `chezmoi apply`. Zed's `settings.json` is a plain copy (Zed's save would replace a symlink): after changing Zed settings in the UI, `chezmoi re-add ~/.config/zed/settings.json`.
 
+Global agent instructions for Claude Code (both profiles) and Codex all come from `dot_claude/CLAUDE.md`; edit that one file and `chezmoi apply`.
+
 Claude Code skills reach both profiles: `~/.claude-7peaks/skills` is a symlink to `~/.claude/skills`. After `npx skills add <name>`, bring it in with `chezmoi add ~/.agents/skills/<name>` and `chezmoi add ~/.claude/skills/<name>` (canonical copy plus the per-agent symlink the CLI creates).
