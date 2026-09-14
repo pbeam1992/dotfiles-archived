@@ -1,6 +1,5 @@
 local leader = { "cmd", "alt", "ctrl" }
 
-
 -- cycle through windows in the current space
 local wf = hs.window.filter.new():setCurrentSpace(true)
 

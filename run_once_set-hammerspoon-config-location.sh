@@ -2,6 +2,7 @@
 set -euo pipefail
 
 # Hammerspoon expands the ~ itself, so the stored value stays portable.
+# shellcheck disable=SC2088
 CONFIG="~/.config/hammerspoon/init.lua"
 
 if [ "$(defaults read org.hammerspoon.Hammerspoon MJConfigFile 2>/dev/null || true)" != "$CONFIG" ]; then

@@ -3,3 +3,6 @@ font-family = BlexMono Nerd Font Mono
 font-size = 15
 window-padding-x = 4
 window-padding-y = 4
+
+# Option as Alt: the ABC layout defaults this to false, which kills fzf's Alt-C and every other Alt binding
+macos-option-as-alt = true

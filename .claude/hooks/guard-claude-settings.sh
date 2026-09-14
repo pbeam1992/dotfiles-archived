@@ -11,6 +11,7 @@
 
 # Newline-separated on purpose: the unquoted uses below word-split on it just the
 # same, and one line per profile stays readable as the list grows.
+# shellcheck disable=SC2086
 TARGETS='linked/claude/settings.json dot_claude/CLAUDE.md
 linked/claude-7peaks/settings.json'
 

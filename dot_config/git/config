@@ -33,5 +33,19 @@
     ff = only
 [rebase]
     autosquash = true
+    updateRefs = true       # stacked branches move together
 [diff]
     algorithm = histogram
+    colorMoved = default    # moved code is not shown as delete+add
+[rerere]
+    enabled = true          # remember conflict resolutions across rebases
+[merge]
+    conflictstyle = zdiff3  # show the common ancestor in conflict hunks
+[commit]
+    verbose = true          # diff in the commit message editor
+[branch]
+    sort = -committerdate   # most recently touched branches first
+[column]
+    ui = auto
+[help]
+    autocorrect = prompt    # ask before running a typo-corrected command

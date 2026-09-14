@@ -26,7 +26,7 @@ chezmoi init --source ~/Repositories/github.com/pbeamirl/dotfiles --apply
 - `.claude/` — repo-only Claude Code config (the commit guard above). chezmoi skips dot-prefixed source entries, so it is never applied to `$HOME`; do *not* list it in `.chezmoiignore`, whose patterns match target paths and would break the real `~/.claude/settings.json`.
 - `dot_config/git/` — `config` holds shared behavior plus the two `includeIf gitdir:` rules; the per-account identities live in `pbeamirl` and `7peaks`. `user.useConfigOnly = true` means a repo matching neither rule refuses to commit rather than guessing an author. `ignore` is the global excludes file (git reads it by default under XDG); Claude Code appends to it, so `chezmoi re-add ~/.config/git/ignore` after it does.
 - `Brewfile` — the single list of brew-managed packages. Adding a package = one line here; `run_onchange_install-packages.sh.tmpl` re-runs `brew bundle` when it changes.
-- `run_once_*` / `run_onchange_*` scripts — setup steps chezmoi runs for us. Only the ones that use template data keep a `.tmpl` suffix. `run_onchange_install-mise-tools.sh.tmpl` guards on `command -v mise` because run_onchange scripts run alphabetically and it fires before `install-packages` on a fresh machine.
+- `run_once_*` / `run_onchange_*` scripts — setup steps chezmoi runs for us. Only the ones that use template data keep a `.tmpl` suffix. `run_onchange_after_install-mise-tools.sh.tmpl` is `after_` so it runs once `install-packages` has put mise on PATH; its `command -v mise` guard is only a backstop.
 - `.chezmoiignore` — repo-only files (README, this file, Brewfile) that must not be applied to `$HOME`; add new repo-only files there.
 
 ## Principles

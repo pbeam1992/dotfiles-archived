@@ -24,7 +24,7 @@
   "buffer_font_size": 15,
   "theme": {
     "mode": "system",
-    "light": "Ayu Light",
-    "dark": "Ayu Dark",
+    "light": "Gruvbox Light Hard",
+    "dark": "Gruvbox Dark Hard",
   },
 }

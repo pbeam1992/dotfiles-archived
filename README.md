@@ -27,7 +27,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    chezmoi init --source ~/Repositories/github.com/pbeamirl/dotfiles --apply
    ```
 
-   You'll be prompted for the **age passphrase** (restores the encryption key, then decrypts `.ssh/config`) and your **login password** (`chsh` to zsh). `brew bundle` installs all formulae, casks, and App Store apps; trackpad/keyboard defaults are applied.
+   You'll be prompted for the **age passphrase** (restores the encryption key, then decrypts `.ssh/config`) and your **login password** (`chsh` to zsh). `brew bundle` installs all formulae, casks, and App Store apps; trackpad/keyboard/Dock defaults are applied.
 
    `~/.config/karabiner` is a symlink into the repo. If Karabiner-Elements was already running before this apply, restart its user server once so it watches the new location (per the [Karabiner docs](https://karabiner-elements.pqrs.org/docs/manual/misc/configuration-file-path/)):
 
@@ -43,10 +43,9 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    git -C ~/Repositories/github.com/pbeamirl/dotfiles remote set-url origin git@github.com:pbeamirl/dotfiles.git
    ```
 
-6. Open a new terminal; restore mise tools and verify:
+6. Open a new terminal and verify:
 
    ```sh
-   mise install          # installs the tools pinned in ~/.config/mise/config.toml
    chezmoi diff          # should be empty
    brew bundle check     # should be satisfied
    ```

@@ -1,5 +1,5 @@
 # Add tools here rather than with `mise use -g` — that command rewrites this same
-# file, so it shows up as chezmoi drift. `run_onchange_install-mise-tools.sh.tmpl`
-# runs `mise install` whenever this file changes.
+# file, so it shows up as chezmoi drift. `run_onchange_after_install-mise-tools.sh.tmpl`
+# runs `mise install` whenever this file changes. Pin majors, not "latest", so both Macs match.
 [tools]
-node = "latest"
+node = "26"

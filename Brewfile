@@ -1,5 +1,7 @@
 cask_args adopt: true
 
+tap "hamed-elfayome/claude-usage"
+
 brew "age"
 brew "bat"
 brew "chezmoi"
@@ -15,6 +17,7 @@ brew "lazygit"
 brew "mas"
 brew "mise"
 brew "neovim"
+brew "shellcheck"
 brew "starship"
 brew "tmux"
 brew "zsh-autosuggestions"
@@ -24,6 +27,7 @@ cask "1password"
 cask "betterdisplay"
 cask "claude"
 cask "claude-code@latest"
+cask "claude-usage-tracker"
 cask "font-blex-mono-nerd-font"
 cask "font-iosevka-term-nerd-font"
 cask "ghostty"
@@ -37,6 +41,7 @@ cask "stats"
 cask "visual-studio-code"
 cask "zed"
 
+mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
 mas "LINE", id: 539883307
 mas "Things 3", id: 904280696
