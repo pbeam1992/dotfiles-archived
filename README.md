@@ -50,7 +50,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    brew bundle check     # should be satisfied
    ```
 
-7. Set up herdr's Claude Code integration from inside herdr. It writes `~/.claude/hooks/herdr-agent-state.sh`, which the `SessionStart` hook in `~/.claude/settings.json` already points at; until then that hook is a harmless no-op.
+7. Set up herdr's Claude Code integration from inside herdr. It writes `~/.claude/hooks/herdr-agent-state.sh`, which the `SessionStart` hook in `~/.claude/settings.json` already points at; until then that hook is a harmless no-op. The 7peaks profile's `settings.json` already carries the same hook pointing at that script, so no second install is needed.
 
 ## Daily use
 
@@ -62,3 +62,5 @@ chezmoi apply   # apply configs + run pending install scripts
 Editing `~/.ssh/config`: edit the live file, then `chezmoi re-add ~/.ssh/config` (re-encrypts; no passphrase needed).
 
 Claude Code's `settings.json` (both profiles) and the Karabiner config dir are symlinks into `linked/` in the repo, so app-made edits show up in `git status` rather than `chezmoi diff`, and a `git pull` takes effect without `chezmoi apply`. Zed's `settings.json` is a plain copy (Zed's save would replace a symlink): after changing Zed settings in the UI, `chezmoi re-add ~/.config/zed/settings.json`.
+
+Claude Code skills reach both profiles: `~/.claude-7peaks/skills` is a symlink to `~/.claude/skills`. After `npx skills add <name>`, bring it in with `chezmoi add ~/.agents/skills/<name>` and `chezmoi add ~/.claude/skills/<name>` (canonical copy plus the per-agent symlink the CLI creates).
