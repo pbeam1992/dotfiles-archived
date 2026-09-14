@@ -1,0 +1,2 @@
+# Karabiner writes these into the symlinked config dir; per-machine, never synced.
+linked/karabiner/automatic_backups/

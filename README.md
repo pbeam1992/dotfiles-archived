@@ -29,6 +29,12 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
 
    You'll be prompted for the **age passphrase** (restores the encryption key, then decrypts `.ssh/config`) and your **login password** (`chsh` to zsh). `brew bundle` installs all formulae, casks, and App Store apps; trackpad/keyboard defaults are applied.
 
+   `~/.config/karabiner` is a symlink into the repo. If Karabiner-Elements was already running before this apply, restart its user server once so it watches the new location (per the [Karabiner docs](https://karabiner-elements.pqrs.org/docs/manual/misc/configuration-file-path/)):
+
+   ```sh
+   launchctl kickstart -k gui/$(id -u)/org.pqrs.service.agent.Karabiner-Console-User-Server
+   ```
+
 4. Sign into 1Password → its SSH agent restores the work keys. Copy your personal GitHub key from 1Password into `~/.ssh/` (filename matching the `IdentityFile` in your ssh config) and `chmod 600` it.
 
 5. Switch this repo's remote to SSH:
@@ -55,3 +61,5 @@ chezmoi apply   # apply configs + run pending install scripts
 ```
 
 Editing `~/.ssh/config`: edit the live file, then `chezmoi re-add ~/.ssh/config` (re-encrypts; no passphrase needed).
+
+Claude Code's `settings.json` (both profiles) and the Karabiner config dir are symlinks into `linked/` in the repo, so app-made edits show up in `git status` rather than `chezmoi diff`, and a `git pull` takes effect without `chezmoi apply`. Zed's `settings.json` is a plain copy (Zed's save would replace a symlink): after changing Zed settings in the UI, `chezmoi re-add ~/.config/zed/settings.json`.

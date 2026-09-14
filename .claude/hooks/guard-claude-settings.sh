@@ -1,8 +1,9 @@
 #!/bin/sh
 # PreToolUse(Bash) guard: ask before a git command sweeps up a Claude Code settings file.
 #
-# Claude Code rewrites its settings.json itself (/model, /config); those edits reach
-# this repo via `chezmoi re-add` and are not always meant to sync across devices.
+# Claude Code rewrites its settings.json itself (/model, /config). $HOME holds a symlink
+# into linked/, so those edits land in this repo directly and are not always meant to
+# sync across devices.
 # dot_claude/CLAUDE.md is hand-edited and feeds both profiles (the 7peaks copy is a
 # template include of it), so a change there is worth a look before it is committed.
 # One settings.json per account profile — see dot_zshrc for the routing.
@@ -10,8 +11,8 @@
 
 # Newline-separated on purpose: the unquoted uses below word-split on it just the
 # same, and one line per profile stays readable as the list grows.
-TARGETS='dot_claude/settings.json dot_claude/CLAUDE.md
-dot_claude-7peaks/settings.json'
+TARGETS='linked/claude/settings.json dot_claude/CLAUDE.md
+linked/claude-7peaks/settings.json'
 
 input=$(cat)
 cmd=$(printf '%s' "$input" | jq -r '.tool_input.command // ""' 2>/dev/null) || exit 0
@@ -45,11 +46,11 @@ case "$cmd" in
     esac
     ;;
 esac
-# Naming a path under dot_claude/ counts for either verb — this is what catches
-# `git commit -m msg dot_claude/settings.json`, where nothing is staged and the
-# checks above see an empty index.
+# Naming a path under dot_claude/ or linked/claude*/ counts for either verb — this is
+# what catches `git commit -m msg linked/claude/settings.json`, where nothing is staged
+# and the checks above see an empty index.
 case "$cmd" in
-  *dot_claude*) included=yes ;;
+  *dot_claude*|*linked/claude*) included=yes ;;
 esac
 [ "$included" = yes ] || exit 0
 
