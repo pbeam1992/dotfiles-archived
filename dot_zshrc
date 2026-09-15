@@ -8,8 +8,14 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'  # case-insensitive
 # "nvim" does, silently breaking ^A/^E/^F and autosuggestion accept.
 bindkey -e
 
+# Ctrl-W stops at /, deleting one path segment like fish
+WORDCHARS=${WORDCHARS//\/}
+
 # Type a bare directory path (e.g. ..) to cd into it, fish-style
 setopt auto_cd
+
+# Allow # comments on the command line, so pasted snippets run
+setopt interactive_comments
 
 # History (fish-like: shared, deduped)
 HISTFILE="$HOME/.zsh_history"
@@ -17,12 +23,10 @@ HISTSIZE=50000
 SAVEHIST=50000
 setopt share_history hist_ignore_all_dups hist_ignore_space
 
-# Nicer file listing and viewing
+# eza for listing: hidden files, colors and Nerd Font icons on a tty, plain in a pipe
 if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --all --icons=auto'
   alias lt='eza --tree --level=3'
-fi
-if command -v bat >/dev/null 2>&1; then
-  alias cat='bat --paging=never'
 fi
 
 # Tool version manager
@@ -33,6 +37,15 @@ fi
 # Prompt
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
+fi
+
+# fd as the fzf source: respects .gitignore, which fzf's built-in walker does not
+if command -v fd >/dev/null 2>&1; then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git --strip-cwd-prefix'
+  export FZF_CTRL_T_COMMAND='fd --hidden --follow --exclude .git --strip-cwd-prefix'
+  export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git --strip-cwd-prefix'
+  _fzf_compgen_path() { fd --hidden --follow --exclude .git . "$1"; }
+  _fzf_compgen_dir() { fd --type d --hidden --follow --exclude .git . "$1"; }
 fi
 
 # fzf keybindings + completion (Ctrl-R history, Ctrl-T files, Alt-C cd)
@@ -69,7 +82,9 @@ claude() {
 alias claude-personal='CC_ACCOUNT=personal claude'
 
 # Fish-like autosuggestions and syntax highlighting (brew packages).
+# Suggestions fall back to the completion engine when history has no match.
 # Syntax highlighting must be sourced last.
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 [ -r /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] &&
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -r /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] &&
