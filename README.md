@@ -13,13 +13,12 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    eval "$(/opt/homebrew/bin/brew shellenv)"   # for this first session only
    ```
 
-2. Install chezmoi and `gh`, log into the personal GitHub account, and clone this repo. The repo is private and no SSH keys exist yet, so the clone goes over HTTPS through the git credential helper that `gh auth login` sets up (answer yes when it offers to authenticate git):
+2. Install chezmoi and `gh`, log into the personal GitHub account, and clone this repo. The repo is private and no SSH keys exist yet, so the clone goes over HTTPS. `gh repo clone` authenticates that one git command by itself, so decline when `gh auth login` offers to configure git credentials (saying yes would leave a stray `~/.gitconfig` behind):
 
    ```sh
    brew install chezmoi gh
    gh auth login
-   mkdir -p ~/Repositories/github.com/pbeamirl
-   git clone https://github.com/pbeamirl/dotfiles.git ~/Repositories/github.com/pbeamirl/dotfiles
+   gh repo clone pbeamirl/dotfiles ~/Repositories/github.com/pbeamirl/dotfiles
    ```
 
    On the work laptop, add the 7peaks GitHub account afterwards with a second `gh auth login`; `gh auth switch` toggles between the two.
@@ -30,13 +29,15 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    chezmoi init --source ~/Repositories/github.com/pbeamirl/dotfiles --apply
    ```
 
-   You'll be prompted for your **login password** (`chsh` to zsh). `brew bundle` installs all formulae, casks, and App Store apps; trackpad/keyboard/Dock defaults are applied.
+   `brew bundle` installs all formulae, casks, and App Store apps (some cask installers, Karabiner-Elements among them, ask for your login password); the macOS defaults for appearance, trackpad, keyboard, Dock and Finder are applied. If `brew bundle` fails partway (typically `mas` before the App Store sign-in), fix the cause and run `chezmoi apply` again: a `run_onchange` script is only recorded as done once it succeeds, and the scripts that sort after it have not run yet.
 
    `~/.config/karabiner` is a symlink into the repo. If Karabiner-Elements was already running before this apply, restart its user server once so it watches the new location (per the [Karabiner docs](https://karabiner-elements.pqrs.org/docs/manual/misc/configuration-file-path/)):
 
    ```sh
    launchctl kickstart -k gui/$(id -u)/org.pqrs.service.agent.Karabiner-Console-User-Server
    ```
+
+   Two things macOS only lets you do by hand: in System Settings → Privacy & Security, allow the Karabiner-Elements driver extension when prompted, and give Hammerspoon Accessibility access (then turn on *Launch Hammerspoon at login* in its preferences). Log out and back in once so dark mode and the keyboard/trackpad defaults take effect everywhere.
 
 4. Sign into both 1Password accounts (personal and 7peaks) in the app and turn on the SSH agent under Settings → Developer. `~/.config/1Password/ssh/agent.toml` is already applied and names the four keys the agent serves, so `ssh` and `git` work from here on; no key ever needs copying to disk. Commits are signed with the same keys through 1Password (`op-ssh-sign`), so on a new GitHub account add the public key once more as a **Signing Key** (GitHub tracks those separately from authentication keys).
 
@@ -49,8 +50,9 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
 6. Open a new terminal and verify:
 
    ```sh
-   chezmoi diff          # should be empty
-   brew bundle check     # should be satisfied
+   chezmoi diff             # should be empty
+   brew bundle check        # should be satisfied
+   docker compose version   # brew plugins are wired in via ~/.docker/cli-plugins
    ```
 
 7. Set up herdr's Claude Code integration from inside herdr. It writes `~/.claude/hooks/herdr-agent-state.sh`, which the `SessionStart` hook in `~/.claude/settings.json` already points at; until then that hook is a harmless no-op. The 7peaks profile's `settings.json` already carries the same hook pointing at that script, so no second install is needed.

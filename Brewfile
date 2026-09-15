@@ -6,6 +6,7 @@ brew "bat"
 brew "chezmoi"
 brew "colima"
 brew "docker"
+brew "docker-buildx"
 brew "docker-compose"
 brew "eza"
 brew "fzf"
@@ -43,4 +44,3 @@ cask "zed"
 mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
 mas "LINE", id: 539883307
-mas "Things 3", id: 904280696
