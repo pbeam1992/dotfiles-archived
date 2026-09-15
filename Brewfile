@@ -1,6 +1,6 @@
 cask_args adopt: true
 
-tap "hamed-elfayome/claude-usage"
+tap "hamed-elfayome/claude-usage", trusted: { casks: ["claude-usage-tracker"] }
 
 brew "bat"
 brew "chezmoi"
