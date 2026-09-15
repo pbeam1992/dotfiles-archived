@@ -6,7 +6,6 @@
   "permissions": {
     "deny": [
       "Read(~/.ssh/**)",
-      "Read(~/.config/chezmoi/key.txt)",
       "Read(~/.aws/**)",
       "Read(.env)",
       "Read(.env.*)"
