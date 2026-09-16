@@ -23,9 +23,20 @@ hs.hotkey.bind(leader, "return", function() windows.moveFocused({ 0, 0, 1, 1 }) 
 
 -- Summon an app to the current space, centred; press again to quit it
 hs.hotkey.bind(leader, "n", summon.toggle("md.obsidian"))
+hs.hotkey.bind(leader, "r", summon.toggle("com.apple.reminders"))
 
--- Reload: leader+R, and automatically on any .lua change in the config dir
-hs.hotkey.bind(leader, "r", hs.reload)
+-- Focus an app, launching it if needed; never quits it
+local function focus(bundleID)
+  hs.application.launchOrFocusByBundleID(bundleID)
+end
+
+-- The default browser is looked up on each press, so changing it in System Settings just works
+hs.hotkey.bind(leader, "b", function() focus(hs.urlevent.getDefaultHandler("http")) end)
+hs.hotkey.bind(leader, "t", function() focus("com.mitchellh.ghostty") end)
+hs.hotkey.bind(leader, "c", function() focus("com.tinyspeck.slackmacgap") end)
+
+-- Reload: leader+shift+R, and automatically on any .lua change in the config dir
+hs.hotkey.bind(leaderShift, "r", hs.reload)
 
 local watcher = hs.pathwatcher.new(hs.configdir, function(files)
   for _, file in ipairs(files) do
