@@ -7,9 +7,9 @@
 -- :Mason works right away, but only lands on the other Mac once it is added here.
 -- Mason has no lockfile, so server versions are not pinned. The npm-based servers run on
 -- mise's Node. A per-server override goes in after/lsp/<name>.lua.
--- No custom keys: Neovim's defaults cover it (K hover, grn rename, gra code action,
--- grr references, gri implementation, gO symbols, [d / ]d diagnostics, <C-s> signature
--- in insert mode), and which-key lists them.
+-- Keys are Neovim's defaults (K hover, grn rename, gra code action, grr references,
+-- gri implementation, grt type definition, gO symbols, [d / ]d diagnostics, <C-s>
+-- signature in insert mode, <C-]> definition) plus gd below; which-key lists them.
 return {
   "mason-org/mason-lspconfig.nvim",
   event = { "BufReadPre", "BufNewFile" },
@@ -30,4 +30,20 @@ return {
       "dockerls",    -- Dockerfile
     },
   },
+  config = function(_, opts)
+    require("mason-lspconfig").setup(opts)
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("lsp_attach", { clear = true }),
+      callback = function(ev)
+        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+        -- gd jumps straight to a single definition and opens the picker when there are
+        -- several. Buffer-local, so gd keeps Vim's meaning where no server is attached.
+        if client:supports_method("textDocument/definition") then
+          vim.keymap.set("n", "gd", function() Snacks.picker.lsp_definitions() end,
+            { buffer = ev.buf, desc = "Go to definition" })
+        end
+      end,
+    })
+  end,
 }
