@@ -1,4 +1,4 @@
-# lazygit — Gruvbox dark hard, matching ~/.config/tmux/tmux.conf and Ghostty.
+# lazygit — Gruvbox dark hard, matching Ghostty, herdr and Neovim.
 # Theme only: every other setting stays at lazygit's defaults.
 #
 # lazygit reads ~/Library/Application Support/lazygit on macOS, so $LG_CONFIG_FILE

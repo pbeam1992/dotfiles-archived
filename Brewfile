@@ -21,7 +21,6 @@ brew "neovim"
 brew "ripgrep"
 brew "shellcheck"
 brew "starship"
-brew "tmux"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 
@@ -42,7 +41,6 @@ cask "slack"
 cask "spotify"
 cask "stats"
 cask "visual-studio-code"
-cask "zed"
 
 mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704

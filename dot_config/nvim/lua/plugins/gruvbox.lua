@@ -1,5 +1,5 @@
--- Gruvbox dark hard, matching Ghostty and tmux. Loaded at startup, ahead of every other
--- plugin, so the colorscheme is in place before anything draws.
+-- Gruvbox dark hard, matching Ghostty, herdr and lazygit. Loaded at startup, ahead of
+-- every other plugin, so the colorscheme is in place before anything draws.
 return {
   "ellisonleao/gruvbox.nvim",
   lazy = false,

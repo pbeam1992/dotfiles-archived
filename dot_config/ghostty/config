@@ -7,10 +7,9 @@ window-padding-y = 8
 # Transparent background, with blur so the desktop behind stays unreadable.
 # Opacity applies to the window background only (background-opacity-cells is
 # left at its default), so anything painting an explicit background stays
-# solid: herdr's tab bar and chrome, the tmux status line, Neovim's own
-# highlights. Neovim is see-through because gruvbox.nvim runs with
-# transparent_mode. macOS needs a full Ghostty restart to pick this up, and
-# disables it in native fullscreen.
+# solid: herdr's tab bar and chrome, Neovim's own highlights. Neovim is
+# see-through because gruvbox.nvim runs with transparent_mode. macOS needs a
+# full Ghostty restart to pick this up, and disables it in native fullscreen.
 background-opacity = 0.9
 background-blur = true
 

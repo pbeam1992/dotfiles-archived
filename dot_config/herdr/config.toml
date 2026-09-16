@@ -1,4 +1,4 @@
-# herdr — Gruvbox dark, matching ~/.config/tmux/tmux.conf, Ghostty and lazygit.
+# herdr — Gruvbox dark, matching Ghostty, lazygit and Neovim.
 # Theme and the tab-bar tweak below, plus `onboarding`, which herdr writes
 # itself after the first-run tour (captured via `chezmoi re-add`). Everything
 # else stays at herdr's defaults.
