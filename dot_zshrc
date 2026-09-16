@@ -26,7 +26,7 @@ setopt share_history hist_ignore_all_dups hist_ignore_space
 # eza for listing: hidden files, colors and Nerd Font icons on a tty, plain in a pipe
 if command -v eza >/dev/null 2>&1; then
   alias ls='eza --all --icons=auto --group-directories-first'
-  alias lt='eza --tree --level=3'
+  alias lt='eza --tree --level=2'
 fi
 
 # Tool version manager
