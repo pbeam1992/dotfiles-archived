@@ -1,10 +1,25 @@
-local leader = { "cmd", "alt", "ctrl" }
+-- Lets the `hs` command line tool talk to this instance (`hs -c "<lua>"`).
+require("hs.ipc")
 
--- cycle through windows in the current space
-local wf = hs.window.filter.new():setCurrentSpace(true)
+local leader = { "cmd", "alt", "ctrl" }
+local leaderShift = { "cmd", "alt", "ctrl", "shift" }
+
+-- Cycle through windows in the current space: leader+tab next, leader+shift+tab
+-- previous. hs.window.orderedWindows() is on-screen windows only, i.e. the
+-- current space of every display, minus minimized and hidden ones. Sorted by
+-- window id, which macOS hands out in creation order, so the order never
+-- shifts and repeated presses visit every window once.
+local function spaceWindows()
+  local wins = {}
+  for _, w in ipairs(hs.window.orderedWindows()) do
+    if w:isStandard() then wins[#wins + 1] = w end
+  end
+  table.sort(wins, function(a, b) return a:id() < b:id() end)
+  return wins
+end
 
 local function cycle(dir)
-  local wins = wf:getWindows(hs.window.filter.sortByCreated)
+  local wins = spaceWindows()
   if #wins == 0 then return end
 
   local cur, idx = hs.window.focusedWindow(), 1
@@ -17,8 +32,8 @@ local function cycle(dir)
   wins[(idx - 1 + dir) % #wins + 1]:focus()
 end
 
-hs.hotkey.bind({"alt"}, "`", function() cycle(1) end)         -- next
-hs.hotkey.bind({"alt", "shift"}, "`", function() cycle(-1) end) -- previous
+hs.hotkey.bind(leader, "tab", function() cycle(1) end)
+hs.hotkey.bind(leaderShift, "tab", function() cycle(-1) end)
 
 -- Window management
 hs.window.animationDuration = 0
