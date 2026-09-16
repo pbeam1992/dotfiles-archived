@@ -75,6 +75,65 @@ hs.hotkey.bind(leader, "h", function() snapCycle(leftCycle) end)
 hs.hotkey.bind(leader, "l", function() snapCycle(rightCycle) end)
 hs.hotkey.bind(leader, "return", function() moveFocused({ 0, 0, 1, 1 }) end)
 
+-- Summon Obsidian: leader+n brings its window onto the current space and
+-- centres it at 3/4 of the screen, launching Obsidian first if needed. Pressed
+-- again while Obsidian is frontmost, it quits Obsidian instead.
+--
+-- On macOS 26+ a window on another space is out of reach: accessibility does
+-- not list it at all (so hs.window never sees it) and hs.spaces.moveWindowToSpace()
+-- reports success without moving anything. So when Obsidian is running but
+-- shows no window here, it is quit and relaunched: it restores the vault, same
+-- notes and all, on the active space. Merely activating it would switch spaces.
+local obsidianID = "md.obsidian"
+local summonUnit = { 1/8, 1/8, 3/4, 3/4 }
+
+local function obsidianWindow()
+  local app = hs.application.get(obsidianID)
+  if not app then return nil end
+  for _, w in ipairs(app:allWindows()) do
+    if w:isStandard() then return w end
+  end
+end
+
+local function place(win)
+  if win:isMinimized() then win:unminimize() end
+  win:setFrame(hs.screen.mainScreen():fromUnitRect(summonUnit))
+  win:focus()
+end
+
+-- Poll until predicate holds, then run action; give up silently after 10s.
+local function waitFor(predicate, action)
+  local deadline = hs.timer.secondsSinceEpoch() + 10
+  hs.timer.waitUntil(function()
+    return predicate() or hs.timer.secondsSinceEpoch() > deadline
+  end, function()
+    if predicate() then action() end
+  end, 0.1)
+end
+
+-- Activate Obsidian (launching it if needed) and place its window once it exists.
+local function activateAndPlace()
+  hs.application.launchOrFocusByBundleID(obsidianID)
+  waitFor(function() return obsidianWindow() ~= nil end,
+          function() place(obsidianWindow()) end)
+end
+
+local function summonObsidian()
+  local win, app = obsidianWindow(), hs.application.get(obsidianID)
+  if win and app:isFrontmost() then
+    app:kill()
+  elseif win then
+    place(win)
+  elseif app then
+    app:kill()
+    waitFor(function() return hs.application.get(obsidianID) == nil end, activateAndPlace)
+  else
+    activateAndPlace()
+  end
+end
+
+hs.hotkey.bind(leader, "n", summonObsidian)
+
 -- Reload: leader+R, and automatically on any .lua change in the config dir
 hs.hotkey.bind(leader, "r", hs.reload)
 
