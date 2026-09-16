@@ -1,5 +1,13 @@
--- Gruvbox dark hard, matching Ghostty and tmux (installed via vim.pack on first start)
-vim.pack.add({ "https://github.com/ellisonleao/gruvbox.nvim" })
-require("gruvbox").setup({ contrast = "hard", transparent_mode = true })
-vim.opt.background = "dark"
-vim.cmd.colorscheme("gruvbox")
+-- Gruvbox dark hard, matching Ghostty and tmux. Loaded at startup, ahead of every other
+-- plugin, so the colorscheme is in place before anything draws.
+return {
+  "ellisonleao/gruvbox.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = { contrast = "hard", transparent_mode = true },
+  config = function(_, opts)
+    require("gruvbox").setup(opts)
+    vim.opt.background = "dark"
+    vim.cmd.colorscheme("gruvbox")
+  end,
+}

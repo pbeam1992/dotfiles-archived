@@ -1,11 +1,12 @@
 -- Neovim - starter config on top of the defaults.
 -- Reference: https://neovim.io/doc/user/options.html
 --
--- Options and autocmds live here. Each plugin is one self-contained file under
--- lua/plugins/ (its own vim.pack.add, setup and key mappings), required at the
--- end of this file, so adding a plugin = one new file there + one require line.
--- The only mappings are the plugin ones, under <space> as leader; everything
--- else is stock Neovim, so :help and any tutorial apply.
+-- Options and autocmds live here. Plugins are managed by lazy.nvim, which clones itself
+-- on first start. Each plugin is one self-contained lazy spec file under lua/plugins/
+-- (source, setup options and key mappings), picked up automatically by the import
+-- below, so adding a plugin = one new file there. The only mappings are the plugin
+-- ones, under <space> as leader; everything else is stock Neovim, so :help and any
+-- tutorial apply.
 
 local opt = vim.opt
 
@@ -45,9 +46,35 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- <space> as leader. Must be set before any mapping that uses it, so before the plugins.
+-- <space> as leader. Must be set before any mapping that uses it, so before lazy.nvim.
 vim.g.mapleader = " "
 
--- Plugins, one file each. Gruvbox first, so the colorscheme is in place before anything draws.
-require("plugins.gruvbox")
-require("plugins.neogit")
+-- Bootstrap lazy.nvim (~/.local/share/nvim/lazy/lazy.nvim) if it is not installed yet
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  local out = vim.fn.system({
+    "git", "clone", "--filter=blob:none", "--branch=stable",
+    "https://github.com/folke/lazy.nvim.git", lazypath,
+  })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  -- Every file in lua/plugins/ returns a spec
+  spec = { { import = "plugins" } },
+  -- Colorscheme for the install UI on first start
+  install = { colorscheme = { "gruvbox" } },
+  -- Updates are deliberate (:Lazy update, then chezmoi re-add the lockfile)
+  checker = { enabled = false },
+  -- No plugin needs luarocks; off so :checkhealth lazy does not ask for it
+  rocks = { enabled = false },
+})
