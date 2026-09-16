@@ -1,0 +1,5 @@
+# StyLua settings, matching the existing code. Also the project marker lua_ls needs:
+# without one it runs in single-file mode and reports no diagnostics. (.luarc.json
+# would work too, but lazydev.nvim warns that it may break it.)
+indent_type = "Spaces"
+indent_width = 2
