@@ -28,8 +28,36 @@ local function moveFocused(unit)
   if win then win:moveToUnit(unit) end
 end
 
-hs.hotkey.bind(leader, "h", function() moveFocused({ 0, 0, 0.5, 1 }) end)
-hs.hotkey.bind(leader, "l", function() moveFocused({ 0.5, 0, 0.5, 1 }) end)
+-- Snap the focused window to units[1]; if it already sits at units[i], move it
+-- to units[i+1] (wrapping), so repeated presses cycle through the sizes.
+local snapTolerance = 8 -- px; apps with size constraints rarely land on the exact pixel
+
+local function frameMatches(frame, target)
+  return math.abs(frame.x - target.x) <= snapTolerance
+     and math.abs(frame.y - target.y) <= snapTolerance
+     and math.abs(frame.w - target.w) <= snapTolerance
+     and math.abs(frame.h - target.h) <= snapTolerance
+end
+
+local function snapCycle(units)
+  local win = hs.window.focusedWindow()
+  if not win then return end
+  local screen, frame = win:screen(), win:frame()
+  local next = 1
+  for i, unit in ipairs(units) do
+    if frameMatches(frame, screen:fromUnitRect(unit)) then
+      next = i % #units + 1
+      break
+    end
+  end
+  win:moveToUnit(units[next])
+end
+
+local leftCycle  = { { 0, 0, 1/2, 1 }, { 0, 0, 2/3, 1 } }
+local rightCycle = { { 1/2, 0, 1/2, 1 }, { 1/3, 0, 2/3, 1 } }
+
+hs.hotkey.bind(leader, "h", function() snapCycle(leftCycle) end)
+hs.hotkey.bind(leader, "l", function() snapCycle(rightCycle) end)
 hs.hotkey.bind(leader, "return", function() moveFocused({ 0, 0, 1, 1 }) end)
 
 -- Reload: leader+R, and automatically on any .lua change in the config dir
