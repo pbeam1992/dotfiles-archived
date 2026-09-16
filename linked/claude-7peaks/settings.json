@@ -4,13 +4,13 @@
     "pr": ""
   },
   "permissions": {
-    "defaultMode": "auto",
     "deny": [
       "Read(~/.ssh/**)",
       "Read(~/.aws/**)",
       "Read(.env)",
       "Read(.env.*)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
   "model": "opus[1m]",
   "hooks": {
