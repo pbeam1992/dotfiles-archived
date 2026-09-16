@@ -6,3 +6,8 @@ window-padding-y = 4
 
 # Option as Alt: the ABC layout defaults this to false, which kills fzf's Alt-C and every other Alt binding
 macos-option-as-alt = true
+
+# Every new surface (window, tab, split) runs herdr, which launches or attaches to
+# its persistent background session, so herdr owns tabs and splits from here on.
+# Absolute path: Ghostty is started by launchd with a bare PATH, no /opt/homebrew.
+command = /opt/homebrew/bin/herdr
