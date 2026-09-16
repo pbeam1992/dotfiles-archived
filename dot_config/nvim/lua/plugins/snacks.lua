@@ -18,6 +18,7 @@ return {
     { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>fh", function() Snacks.picker.help() end, desc = "Help pages" },
+    { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
     { "<leader>fr", function() Snacks.picker.resume() end, desc = "Resume last picker" },
   },
 }
