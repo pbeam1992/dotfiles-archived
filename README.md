@@ -1,10 +1,8 @@
 # dotfiles
 
-Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Macs (personal and 7peaks work laptop). Packages come from the `Brewfile`. There are no secrets in the repo: SSH private keys stay in 1Password and are served by its SSH agent, and `~/.ssh/config` pins each host to a key by its public `.pub` file.
+Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Macs (personal and 7peaks work laptop). Apps and packages come from the `Brewfile` (Homebrew only, nothing from the App Store); apps without a Homebrew cask are installed by hand (see [Manual installs](#manual-installs)). There are no secrets in the repo: SSH private keys stay in 1Password and are served by its SSH agent, and `~/.ssh/config` pins each host to a key by its public `.pub` file.
 
 ## Bootstrap (fresh Mac)
-
-0. In the macOS setup assistant, sign into iCloud / the App Store (needed for the `mas` apps).
 
 1. Install Homebrew (also installs Xcode CLT, which provides git):
 
@@ -29,7 +27,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    chezmoi init --source ~/Repositories/github.com/pbeamirl/dotfiles --apply
    ```
 
-   `brew bundle` installs all formulae, casks, and App Store apps (some cask installers, Karabiner-Elements among them, ask for your login password); the macOS defaults for appearance, trackpad, keyboard, Dock and Finder are applied. If `brew bundle` fails partway (typically `mas` before the App Store sign-in), fix the cause and run `chezmoi apply` again: a `run_onchange` script is only recorded as done once it succeeds, and the scripts that sort after it have not run yet.
+   `brew bundle` installs all formulae and casks (some cask installers, Karabiner-Elements among them, ask for your login password); the macOS defaults for appearance, trackpad, keyboard, Dock and Finder are applied. If `brew bundle` fails partway, fix the cause and run `chezmoi apply` again: a `run_onchange` script is only recorded as done once it succeeds, and the scripts that sort after it have not run yet.
 
    `~/.config/karabiner` is a symlink into the repo. If Karabiner-Elements was already running before this apply, restart its user server once so it watches the new location (per the [Karabiner docs](https://karabiner-elements.pqrs.org/docs/manual/misc/configuration-file-path/)):
 
@@ -56,6 +54,18 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    ```
 
 7. Set up herdr's Claude Code integration from inside herdr. It writes `~/.claude/hooks/herdr-agent-state.sh`, which the `SessionStart` hook in `~/.claude/settings.json` already points at; until then that hook is a harmless no-op. The 7peaks profile's `settings.json` already carries the same hook pointing at that script, so no second install is needed.
+
+8. Install the apps in [Manual installs](#manual-installs).
+
+## Manual installs
+
+Nothing is installed from the App Store. These apps have no Homebrew cask, so install them by hand:
+
+- 1Password for Safari
+- Amphetamine
+- LINE
+
+Before adding an app here, check `brew search --cask <name>`; if a cask exists, put it in the `Brewfile` instead.
 
 ## Daily use
 

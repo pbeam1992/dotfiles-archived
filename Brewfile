@@ -15,7 +15,6 @@ brew "gh"
 brew "herdr"
 brew "jq"
 brew "lazygit"
-brew "mas"
 brew "mise"
 brew "neovim"
 brew "ripgrep"
@@ -41,7 +40,3 @@ cask "slack"
 cask "spotify"
 cask "stats"
 cask "visual-studio-code"
-
-mas "1Password for Safari", id: 1569813296
-mas "Amphetamine", id: 937984704
-mas "LINE", id: 539883307
