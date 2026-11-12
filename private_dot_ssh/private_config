@@ -31,5 +31,5 @@ Host gitlab-appconduct
 Host github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/github-pbeamirl.pub
+  IdentityFile ~/.ssh/github-pbeam1992.pub
   IdentitiesOnly yes

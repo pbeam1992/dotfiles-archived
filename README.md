@@ -16,7 +16,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    ```sh
    brew install chezmoi gh
    gh auth login
-   gh repo clone pbeamirl/dotfiles ~/Repositories/github.com/pbeamirl/dotfiles
+   gh repo clone pbeam1992/dotfiles ~/Repositories/github.com/pbeam1992/dotfiles
    ```
 
    On the work laptop, add the 7peaks GitHub account afterwards with a second `gh auth login`; `gh auth switch` toggles between the two.
@@ -24,7 +24,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
 3. Run everything:
 
    ```sh
-   chezmoi init --source ~/Repositories/github.com/pbeamirl/dotfiles --apply
+   chezmoi init --source ~/Repositories/github.com/pbeam1992/dotfiles --apply
    ```
 
    `brew bundle` installs all formulae and casks (some cask installers, Karabiner-Elements among them, ask for your login password); the macOS defaults for appearance, trackpad, keyboard, Dock and Finder are applied. If `brew bundle` fails partway, fix the cause and run `chezmoi apply` again: a `run_onchange` script is only recorded as done once it succeeds, and the scripts that sort after it have not run yet.
@@ -42,7 +42,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
 5. Switch this repo's remote to SSH:
 
    ```sh
-   git -C ~/Repositories/github.com/pbeamirl/dotfiles remote set-url origin git@github.com:pbeamirl/dotfiles.git
+   git -C ~/Repositories/github.com/pbeam1992/dotfiles remote set-url origin git@github.com:pbeam1992/dotfiles.git
    ```
 
 6. Open a new terminal and verify:
