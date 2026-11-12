@@ -53,9 +53,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    docker compose version   # brew plugins are wired in via ~/.docker/cli-plugins
    ```
 
-7. Set up herdr's Claude Code integration from inside herdr. It writes `~/.claude/hooks/herdr-agent-state.sh`, which the `SessionStart` hook in `~/.claude/settings.json` already points at; until then that hook is a harmless no-op. The 7peaks profile's `settings.json` already carries the same hook pointing at that script, so no second install is needed.
-
-8. Install the apps in [Manual installs](#manual-installs).
+7. Install the apps in [Manual installs](#manual-installs).
 
 ## Manual installs
 
@@ -76,8 +74,6 @@ chezmoi apply   # apply configs + run pending install scripts
 
 Adding an SSH key: create it as an SSH Key item in 1Password, list its title in `dot_config/private_1Password/private_ssh/agent.toml`, drop its public key in `private_dot_ssh/<title>.pub`, and pin it in `private_dot_ssh/private_config`. Then `chezmoi apply`; the agent picks up `agent.toml` changes without a restart.
 
-Claude Code's `settings.json` (both profiles) and the Karabiner config dir are symlinks into `linked/` in the repo, so app-made edits show up in `git status` rather than `chezmoi diff`, and a `git pull` takes effect without `chezmoi apply`.
+Claude Code's `settings.json` and the Karabiner config dir are symlinks into `linked/` in the repo, so app-made edits show up in `git status` rather than `chezmoi diff`, and a `git pull` takes effect without `chezmoi apply`.
 
-Global agent instructions for Claude Code (both profiles) and Codex all come from `dot_claude/CLAUDE.md`; edit that one file and `chezmoi apply`.
-
-Claude Code skills reach both profiles: `~/.claude-7peaks/skills` is a symlink to `~/.claude/skills`. After `npx skills add <name>`, bring it in with `chezmoi add ~/.agents/skills/<name>` and `chezmoi add ~/.claude/skills/<name>` (canonical copy plus the per-agent symlink the CLI creates).
+Global agent instructions for Claude Code come from `dot_claude/CLAUDE.md`; edit that file and `chezmoi apply`.

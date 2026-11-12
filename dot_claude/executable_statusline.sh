@@ -146,12 +146,11 @@ if [ -n "$five_pct" ]; then
 fi
 
 # --- Model-scoped weekly limit (usage API, cached) ----------------------------
-# Each account lives in its own config dir (CLAUDE_CONFIG_DIR; see the claude()
-# wrapper in ~/.zshrc). Claude Code names the Keychain entry after that dir:
-# bare for the default ~/.claude, else suffixed with the first 8 hex of its
-# sha256. Mirror that here so the weekly figures belong to the account this
-# session is actually signed in as, and so the two profiles do not share a
-# cache file. With CLAUDE_CONFIG_DIR unset this is byte-for-byte the old path.
+# Each account lives in its own config dir (CLAUDE_CONFIG_DIR). Claude Code
+# names the Keychain entry after that dir: bare for the default ~/.claude, else
+# suffixed with the first 8 hex of its sha256. Mirror that here so the weekly
+# figures belong to the account this session is actually signed in as, and so
+# separate profiles do not share a cache file.
 cfg_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 kc_service="Claude Code-credentials"
 if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
@@ -209,8 +208,7 @@ if [ -n "$week_str" ]; then
 fi
 
 # --- Account ------------------------------------------------------------------
-# Which Claude account this session is signed in as — the personal profile and
-# the 7peaks one are separate logins, and the line is otherwise identical. Each
+# Which Claude account this session is signed in as. Each
 # profile stores its login beside its config dir: ~/.claude.json for the default
 # profile, $CLAUDE_CONFIG_DIR/.claude.json for any other.
 if [ -n "${CLAUDE_CONFIG_DIR:-}" ]; then
