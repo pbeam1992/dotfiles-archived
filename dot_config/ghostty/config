@@ -7,17 +7,17 @@ window-padding-y = 8
 # Transparent background, with blur so the desktop behind stays unreadable.
 # Opacity applies to the window background only (background-opacity-cells is
 # left at its default), so anything painting an explicit background stays
-# solid: herdr's tab bar and chrome, Neovim's own highlights. Neovim is
-# see-through because gruvbox.nvim runs with transparent_mode. macOS needs a
-# full Ghostty restart to pick this up, and disables it in native fullscreen.
+# solid, such as Neovim's own highlights. Neovim is see-through because
+# gruvbox.nvim runs with transparent_mode. macOS needs a full Ghostty restart
+# to pick this up, and disables it in native fullscreen.
 background-opacity = 0.9
 background-blur = true
 
 # No titlebar at all. macOS has no "hide it only when one tab is open":
 # window-show-tab-bar is GTK-only and the "tabs" style always draws a strip, so
-# "hidden" is the only way to get the row back. It costs Ghostty's native tabs,
-# which herdr replaces anyway -- HiddenTitlebarTerminalWindow sets
-# tabbingMode = .disallowed, so cmd+t opens a window rather than a tab. It also
+# "hidden" is the only way to get the row back. It costs Ghostty's native tabs:
+# HiddenTitlebarTerminalWindow sets tabbingMode = .disallowed, so cmd+t opens a
+# window rather than a tab. Tabs and splits live in the Herdr app instead. It also
 # costs the traffic lights (always hidden in this mode, macos-window-buttons has
 # no effect) and the titlebar drag area; windows are placed with the Hammerspoon
 # leader bindings in ~/.config/hammerspoon/init.lua instead.
@@ -25,8 +25,3 @@ macos-titlebar-style = hidden
 
 # Option as Alt: the ABC layout defaults this to false, which kills fzf's Alt-C and every other Alt binding
 macos-option-as-alt = true
-
-# Every new surface (window, tab, split) runs herdr, which launches or attaches to
-# its persistent background session, so herdr owns tabs and splits from here on.
-# Absolute path: Ghostty is started by launchd with a bare PATH, no /opt/homebrew.
-command = /opt/homebrew/bin/herdr
