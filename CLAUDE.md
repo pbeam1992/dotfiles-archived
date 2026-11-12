@@ -24,7 +24,7 @@ chezmoi add <file>  # bring a file in $HOME under management
 
 ## Principles
 
-- **System packages are brew-only**, listed in `Brewfile`. No App Store (`mas`) apps; an app without a cask goes in README's "Manual installs" list. Tools scoped to one program use that program's list (lazy.nvim, Mason); language runtimes use mise.
+- **System packages are brew-only**, listed in `Brewfile`. No `mas` automation; an app without a cask is installed by hand from the App Store and goes in README's "Manual installs" list. Tools scoped to one program use that program's list (lazy.nvim, Mason); language runtimes use mise.
 - **Idempotent scripts.** Never `brew install` in scripts; anything with a side effect checks state first.
 - **macOS-only.** Hardcode `/opt/homebrew`, BSD tools, no OS guards.
 - **Keep it simple.** No wrappers around chezmoi or brew.
