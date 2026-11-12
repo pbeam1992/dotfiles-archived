@@ -1,6 +1,6 @@
 # dotfiles
 
-Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Macs (personal and 7peaks work laptop). Apps and packages come from the `Brewfile` (Homebrew only, nothing from the App Store); apps without a Homebrew cask are installed by hand (see [Manual installs](#manual-installs)). There are no secrets in the repo: SSH private keys stay in 1Password and are served by its SSH agent, and `~/.ssh/config` pins each host to a key by its public `.pub` file.
+Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Macs (personal and 7peaks work laptop). Apps and packages come from the `Brewfile` (Homebrew only, no `mas` automation); apps without a Homebrew cask are installed by hand from the App Store (see [Manual installs](#manual-installs)). There are no secrets in the repo: SSH private keys stay in 1Password and are served by its SSH agent, and `~/.ssh/config` pins each host to a key by its public `.pub` file.
 
 ## Bootstrap (fresh Mac)
 
@@ -56,7 +56,7 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
 
 ## Manual installs
 
-Nothing is installed from the App Store. These apps have no Homebrew cask, so install them by hand:
+These apps have no Homebrew cask, so install them by hand from the App Store:
 
 - 1Password for Safari
 - Amphetamine
