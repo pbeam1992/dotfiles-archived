@@ -14,11 +14,11 @@ defaults write -g KeyRepeat -int 2
 defaults write -g InitialKeyRepeat -int 30
 defaults write -g ApplePressAndHoldEnabled -bool false
 
-# Dock: no pinned apps or stacks (only running apps, Finder and Trash), left, auto-hide,
+# Dock: no pinned apps or stacks (only running apps, Finder and Trash), right, auto-hide,
 # no recent apps, Spaces stay in the order they were put
 defaults write com.apple.dock persistent-apps -array
 defaults write com.apple.dock persistent-others -array
-defaults write com.apple.dock orientation -string left
+defaults write com.apple.dock orientation -string right
 defaults write com.apple.dock tilesize -float 60
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock show-recents -bool false
