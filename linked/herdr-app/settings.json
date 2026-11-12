@@ -1,0 +1,11 @@
+{
+  "zoom": 1,
+  "theme": "gruvbox",
+  "sounds": {
+    "enabled": true
+  },
+  "font_ligatures": false,
+  "minimum_contrast": 1,
+  "font": "IosevkaTerm Nerd Font Mono",
+  "font_size": 15
+}

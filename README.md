@@ -74,6 +74,6 @@ chezmoi apply   # apply configs + run pending install scripts
 
 Adding an SSH key: create it as an SSH Key item in 1Password, list its title in `dot_config/private_1Password/private_ssh/agent.toml`, drop its public key in `private_dot_ssh/<title>.pub`, and pin it in `private_dot_ssh/private_config`. Then `chezmoi apply`; the agent picks up `agent.toml` changes without a restart.
 
-Claude Code's `settings.json` and the Karabiner config dir are symlinks into `linked/` in the repo, so app-made edits show up in `git status` rather than `chezmoi diff`, and a `git pull` takes effect without `chezmoi apply`.
+Claude Code's and the Herdr app's `settings.json` and the Karabiner config dir are symlinks into `linked/` in the repo, so app-made edits show up in `git status` rather than `chezmoi diff`, and a `git pull` takes effect without `chezmoi apply`.
 
 Global agent instructions for Claude Code come from `dot_claude/CLAUDE.md`; edit that file and `chezmoi apply`.
