@@ -1,8 +1,5 @@
 cask_args adopt: true
 
-tap "hamed-elfayome/claude-usage", trusted: { casks: ["claude-usage-tracker"] }
-
-brew "bat"
 brew "chezmoi"
 brew "colima"
 brew "docker"
@@ -26,8 +23,6 @@ cask "1password"
 cask "betterdisplay"
 cask "claude"
 cask "claude-code@latest"
-cask "claude-usage-tracker"
-cask "font-blex-mono-nerd-font"
 cask "font-iosevka-term-nerd-font"
 cask "ghostty"
 cask "google-chrome"
