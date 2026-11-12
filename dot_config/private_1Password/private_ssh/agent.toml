@@ -1,7 +1,7 @@
 # Keys the 1Password SSH agent offers. This file's existence replaces the default
 # vault set, so every key ~/.ssh/config pins must be listed here.
 [[ssh-keys]]
-item = "github-pbeamirl"
+item = "github-pbeam1992"
 
 [[ssh-keys]]
 item = "git-7peaks"
