@@ -50,7 +50,6 @@ Dotfiles managed by [chezmoi](https://www.chezmoi.io/) for two Apple-Silicon Mac
    ```sh
    chezmoi diff             # should be empty
    brew bundle check        # should be satisfied
-   docker compose version   # brew plugins are wired in via ~/.docker/cli-plugins
    ```
 
 7. Install the apps in [Manual installs](#manual-installs).

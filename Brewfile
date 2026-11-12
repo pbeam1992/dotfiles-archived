@@ -1,10 +1,6 @@
 cask_args adopt: true
 
 brew "chezmoi"
-brew "colima"
-brew "docker"
-brew "docker-buildx"
-brew "docker-compose"
 brew "eza"
 brew "fd"
 brew "fzf"

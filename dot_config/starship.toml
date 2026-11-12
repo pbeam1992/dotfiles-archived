@@ -17,11 +17,6 @@ read_only = " 󰌾"
 # Only show duration for commands slower than 2s
 min_time = 2000
 
-# colima is the only Docker context, so naming it says nothing
-[docker_context]
-disabled = true
-symbol = " "
-
 # App repos carry a boilerplate version; not worth a prompt segment
 [package]
 disabled = true
